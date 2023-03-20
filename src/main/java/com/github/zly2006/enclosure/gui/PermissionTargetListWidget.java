@@ -93,12 +93,12 @@ public class PermissionTargetListWidget extends ElementListWidget<PermissionTarg
         PlayerEntry(Text name, UUID uuid) {
             this.name = name;
             this.uuid = uuid;
-            this.setButton = ButtonWidget.builder(Text.translatable("enclosure.widget.set"), button -> {
+            this.setButton = new ButtonWidget(0, 0, 40, 20, Text.translatable("enclosure.widget.set"), button -> {
                 if (screen == null) {
                     screen = new PermissionScreen(area, uuid, fullName, parent);
                 }
                 client.setScreen(screen);
-            }).size(40, 20).build();
+            });
         }
 
         @Override
@@ -114,8 +114,8 @@ public class PermissionTargetListWidget extends ElementListWidget<PermissionTarg
         @Override
         public void render(MatrixStack matrices, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
             client.textRenderer.draw(matrices, name, x + 20, y + 3, 0xffffff);
-            setButton.setX(x + entryWidth - 40);
-            setButton.setY(y);
+            setButton.x = (x + entryWidth - 40);
+            setButton.y = y;
             setButton.render(matrices, mouseX, mouseY, tickDelta);
             assert client.player != null;
             Optional.ofNullable(client.player.networkHandler.getPlayerListEntry(uuid))
@@ -151,7 +151,7 @@ public class PermissionTargetListWidget extends ElementListWidget<PermissionTarg
 
         @Override
         public void render(MatrixStack matrices, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
-            searchWidget.setY(y);
+            searchWidget.y = y;
             searchWidget.setX(x + 70);
             searchWidget.setWidth(entryWidth - 70 - 2);
             searchWidget.render(matrices, mouseX, mouseY, tickDelta);

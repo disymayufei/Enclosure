@@ -23,21 +23,17 @@ public class ConfirmScreen extends Screen {
         this.parent = parent;
         this.message = message;
         this.action = action;
-        yesButton = ButtonWidget.builder(Text.translatable("enclosure.widget.yes"), button -> {
-                action.run();
-                assert client != null;
-                client.setScreen(parent);
-            })
-            .position(parent.width / 2 - 95, 0)
-            .size(90, 20)
-            .build();
-        noButton = ButtonWidget.builder(Text.translatable("enclosure.widget.no"), button -> {
-                assert client != null;
-                client.setScreen(parent);
-            })
-            .position(parent.width / 2 + 5, 0)
-            .size(90, 20)
-            .build();
+        yesButton = new ButtonWidget((parent.width / 2 - 95), 0, 90, 20, Text.translatable("enclosure.widget.yes"), button -> {
+            action.run();
+            assert client != null;
+            client.setScreen(parent);
+        });
+
+        noButton = new ButtonWidget(parent.width / 2 + 5, 0, 90, 20, Text.translatable("enclosure.widget.no"), button -> {
+            assert client != null;
+            client.setScreen(parent);
+        });
+
         addDrawableChild(yesButton);
         addDrawableChild(noButton);
     }
@@ -56,8 +52,8 @@ public class ConfirmScreen extends Screen {
             textRenderer.draw(matrices, line, x + 10, linesY, 0xFFFFFF);
             linesY += 10;
         }
-        yesButton.setY(y + height - 30);
-        noButton.setY(y + height - 30);
+        yesButton.y = (y + height - 30);
+        noButton.y = (y + height - 30);
         yesButton.render(matrices, mouseX, mouseY, delta);
         noButton.render(matrices, mouseX, mouseY, delta);
     }

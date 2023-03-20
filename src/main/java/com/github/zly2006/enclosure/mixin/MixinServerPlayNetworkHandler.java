@@ -2,8 +2,8 @@ package com.github.zly2006.enclosure.mixin;
 
 import com.github.zly2006.enclosure.access.MiningStatusAccess;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.network.Packet;
 import net.minecraft.network.listener.ClientPlayPacketListener;
-import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket;
 import net.minecraft.network.packet.s2c.play.BlockUpdateS2CPacket;
 import net.minecraft.network.packet.s2c.play.PlayerActionResponseS2CPacket;

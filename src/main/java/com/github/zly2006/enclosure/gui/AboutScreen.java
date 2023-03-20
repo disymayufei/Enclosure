@@ -33,15 +33,15 @@ public class AboutScreen extends Screen {
         textWidgets.add(new ClickableTextWidget(client, parent, Text.translatable("enclosure.about.translator"), null, button -> {
         }, 5, 5, width - 20));
         textWidgets.add(new ClickableTextWidget(client, parent, Text.translatable("enclosure.about.team_page").formatted(Formatting.UNDERLINE), Text.translatable("enclosure.about.click_to_open"),
-            button -> ConfirmLinkScreen.open("https://www.starlight.cool/", this, true), 5, 5, width - 20));
+            button -> client.setScreen(new ConfirmLinkScreen(opened -> client.setScreen(this), "https://www.starlight.cool/", true)), 5, 5, width - 20));
         textWidgets.add(new ClickableTextWidget(client, parent, Text.translatable("enclosure.about.copyright"), null, button -> {
         }, 5, 5, width - 20));
         textWidgets.add(new ClickableTextWidget(client, parent, Text.literal("Get source code at Github").formatted(Formatting.UNDERLINE), Text.translatable("enclosure.about.click_to_open"),
-            button -> ConfirmLinkScreen.open("https://github.com/zly2006/Enclosure/", this, true), 5, 5, width - 20));
+            button -> client.setScreen(new ConfirmLinkScreen(opened -> client.setScreen(this), "https://github.com/zly2006/Enclosure/", true)), 5, 5, width - 20));
         textWidgets.add(new ClickableTextWidget(client, parent, Text.translatable("点击查看中文wiki页面").formatted(Formatting.UNDERLINE), Text.translatable("enclosure.about.click_to_open"),
-            button -> ConfirmLinkScreen.open(WIKI_ZH, this, true), 5, 5, width - 20));
+            button -> client.setScreen(new ConfirmLinkScreen(opened -> client.setScreen(this), WIKI_ZH, true)), 5, 5, width - 20));
         textWidgets.add(new ClickableTextWidget(client, parent, Text.translatable("Click to open English wiki page").formatted(Formatting.UNDERLINE), Text.translatable("enclosure.about.click_to_open"),
-            button -> ConfirmLinkScreen.open(WIKI_EN, this, true), 5, 5, width - 20));
+            button -> client.setScreen(new ConfirmLinkScreen(opened -> client.setScreen(this), WIKI_EN, true)), 5, 5, width - 20));
     }
 
     @Override
@@ -51,7 +51,7 @@ public class AboutScreen extends Screen {
         int renderStart = Math.max(50, centerHeight - 80);
         drawTextAtCenter(matrices, Text.of("About Enclosure"), centerWidth, 10);
         renderStart += 10;
-        renderBackgroundTexture(matrices);
+        renderBackgroundTexture(0);
         for (ClickableTextWidget textWidget : textWidgets) {
             textWidget.x = 10;
             textWidget.y = renderStart;

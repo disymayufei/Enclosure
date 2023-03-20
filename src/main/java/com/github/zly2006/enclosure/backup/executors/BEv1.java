@@ -15,7 +15,6 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtHelper;
-import net.minecraft.registry.Registries;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
@@ -154,7 +153,7 @@ public class BEv1 implements BackupExecutor {
                 if (block.isEmpty()) {
                     world.setBlockState(pos, Blocks.AIR.getDefaultState());
                 } else {
-                    world.setBlockState(pos, NbtHelper.toBlockState(Registries.BLOCK.getReadOnlyWrapper(), block.getCompound("state")),
+                    world.setBlockState(pos, NbtHelper.toBlockState(block.getCompound("state")),
                         // don't update neighbors & light
                         Block.NOTIFY_LISTENERS & Block.SKIP_LIGHTING_UPDATES);
                     if (block.contains("blockEntity")) {

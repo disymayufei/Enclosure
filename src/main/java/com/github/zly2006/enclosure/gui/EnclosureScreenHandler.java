@@ -1,14 +1,14 @@
 package com.github.zly2006.enclosure.gui;
 
 import com.github.zly2006.enclosure.EnclosureArea;
+import dev.architectury.registry.registries.Registries;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.registry.Registries;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.util.Identifier;
-import net.minecraft.registry.Registry;
+import net.minecraft.util.registry.Registry;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,11 +46,11 @@ public class EnclosureScreenHandler extends ScreenHandler {
     }
 
     public static void register() {
-        Registry.register(Registries.SCREEN_HANDLER, ENCLOSURE_SCREEN_ID, ENCLOSURE_SCREEN_HANDLER);
+        Registry.register(Registry.SCREEN_HANDLER, ENCLOSURE_SCREEN_ID, ENCLOSURE_SCREEN_HANDLER);
     }
 
     @Override
-    public ItemStack quickMove(PlayerEntity player, int slot) {
+    public ItemStack transferSlot(PlayerEntity player, int index) {
         return null;
     }
 

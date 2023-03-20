@@ -14,7 +14,7 @@ public class TrT {
         if (FabricLoader.getInstance().getEnvironmentType() == EnvType.SERVER) {
             ServerMain.load();
             if (ServerMain.translation.has(key)) {
-                return Text.translatableWithFallback(key, ServerMain.translation.get(key).getAsString(), arguments);
+                return Text.translatable(key, ServerMain.translation.get(key).getAsString(), arguments);
             }
         }
         return Text.translatable(key, arguments);

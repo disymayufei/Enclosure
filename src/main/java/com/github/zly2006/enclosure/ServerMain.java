@@ -38,7 +38,6 @@ import net.minecraft.entity.decoration.ArmorStandEntity;
 import net.minecraft.entity.passive.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
-import net.minecraft.registry.RegistryKey;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
@@ -52,7 +51,9 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.World;
+import net.minecraft.world.explosion.Explosion;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
@@ -139,7 +140,7 @@ public class ServerMain implements DedicatedServerModInitializer {
                 (context.block == Blocks.GRASS_BLOCK && (context.item instanceof ShovelItem || context.item == Items.BONE_MEAL)) ||
                 (context.block == Blocks.DIRT && context.item instanceof PotionItem potion));
         put(USE_JUKEBOX, context -> context.block == Blocks.JUKEBOX);
-        put(REDSTONE, context -> context.block instanceof ButtonBlock
+        put(REDSTONE, context -> context.block instanceof AbstractButtonBlock
                 || context.block == Blocks.LEVER
                 || context.block == Blocks.DAYLIGHT_DETECTOR);
         put(STRIP_LOG, context ->
@@ -387,7 +388,7 @@ public class ServerMain implements DedicatedServerModInitializer {
                                 Vec3d pos = Vec3ArgumentType.getVec3(context, "pos");
                                 float radius = FloatArgumentType.getFloat(context, "radius");
                                 ServerWorld world = context.getSource().getWorld();
-                                world.createExplosion(null, pos.x, pos.y, pos.z, radius, World.ExplosionSourceType.TNT);
+                                world.createExplosion(null, pos.x, pos.y, pos.z, radius, Explosion.DestructionType.DESTROY);
                                 return 0;
                             }))));
             }

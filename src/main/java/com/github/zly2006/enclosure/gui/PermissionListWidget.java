@@ -23,7 +23,6 @@ import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.*;
-import java.util.function.Supplier;
 
 import static com.github.zly2006.enclosure.commands.EnclosureCommand.CONSOLE;
 
@@ -97,21 +96,21 @@ public class PermissionListWidget extends ElementListWidget<PermissionListWidget
 
         public PermissionEntry(Permission permission) {
             this.permission = permission;
-            buttonWidget = new SetButtonWidget(0, 0, 40, 20, value(), buttonWidget -> {}, Supplier::get);
+            buttonWidget = new SetButtonWidget(0, 0, 40, 20, value(), buttonWidget -> {});
         }
 
         @Override
         public void render(MatrixStack matrices, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
-            buttonWidget.setY(y);
-            buttonWidget.setX(x + entryWidth - 40);
+            buttonWidget.y = y;
+            buttonWidget.x = (x + entryWidth - 40);
             buttonWidget.render(matrices, mouseX, mouseY, tickDelta);
             client.textRenderer.draw(matrices, permission.getName(), x + 20, y + 3, 0xFFFFFF);
             client.textRenderer.draw(matrices, permission.getDescription(), x + 140, y + 3, 0x999999);
             if (permission.getIcon() != null) {
-                client.getItemRenderer().renderInGui(matrices, new ItemStack(permission.getIcon()), x, y);
+                client.getItemRenderer().renderInGui(new ItemStack(permission.getIcon()), x, y);
             }
             else {
-                client.getItemRenderer().renderInGui(matrices, new ItemStack(Items.STRUCTURE_VOID), x, y);
+                client.getItemRenderer().renderInGui(new ItemStack(Items.STRUCTURE_VOID), x, y);
             }
             if (buttonWidget.isHovered()) {
                 parent.renderTooltip(matrices, List.of(
@@ -138,8 +137,8 @@ public class PermissionListWidget extends ElementListWidget<PermissionListWidget
             return List.of(buttonWidget);
         }
         public class SetButtonWidget extends ButtonWidget {
-            public SetButtonWidget(int x, int y, int width, int height, Text message, PressAction onPress, NarrationSupplier narrationSupplier) {
-                super(x, y, width, height, message, onPress, narrationSupplier);
+            public SetButtonWidget(int x, int y, int width, int height, Text message, PressAction onPress) {
+                super(x, y, width, height, message, onPress);
             }
 
             @Override
@@ -153,7 +152,7 @@ public class PermissionListWidget extends ElementListWidget<PermissionListWidget
                     if (value == null) setValue(true);
                     else setValue(null);
 
-                    client.player.networkHandler.sendChatCommand("enclosure set " + fullName + " uuid " +
+                    client.player.sendCommand("enclosure set " + fullName + " uuid " +
                         uuid.toString() + " " +
                         permission.getName() + " " +
                         getValue().map(String::valueOf).orElse("none"));
@@ -164,7 +163,7 @@ public class PermissionListWidget extends ElementListWidget<PermissionListWidget
                     Boolean value = getValue().orElse(null);
                     if (value == null) setValue(false);
                     else setValue(null);
-                    client.player.networkHandler.sendChatCommand("enclosure set " + fullName + " uuid " +
+                    client.player.sendCommand("enclosure set " + fullName + " uuid " +
                         uuid.toString() + " " +
                         permission.getName() + " " +
                         getValue().map(String::valueOf).orElse("none"));
@@ -204,7 +203,7 @@ public class PermissionListWidget extends ElementListWidget<PermissionListWidget
 
         @Override
         public void render(MatrixStack matrices, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
-            searchWidget.setY(y);
+            searchWidget.y = y;
             searchWidget.setX(x + 70);
             searchWidget.setWidth(entryWidth - 70 - 2);
             searchWidget.render(matrices, mouseX, mouseY, tickDelta);

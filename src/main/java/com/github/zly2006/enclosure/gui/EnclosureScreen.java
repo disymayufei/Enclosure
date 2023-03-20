@@ -38,38 +38,31 @@ public class EnclosureScreen extends HandledScreen<EnclosureScreenHandler> {
         textWidgets.clear();
         subLandWidgets.clear();
         permissionTargetListWidget = addDrawableChild(new PermissionTargetListWidget(client, area, handler.fullName, this, width, height, 60, height));
-        globalWidget = addDrawableChild(ButtonWidget.builder(Text.translatable("enclosure.widget.global"), button -> {
+
+        globalWidget = addDrawableChild(new ButtonWidget(5, 35, 100, 20, Text.translatable("enclosure.widget.global"), button -> {
                 assert client != null;
                 client.setScreen(new PermissionScreen(area, new UUID(0, 0), handler.fullName, this));
-            })
-            .size(100, 20)
-            .position(5, 35)
-            .build());
-        playerWidget = addDrawableChild(ButtonWidget.builder(Text.translatable("enclosure.widget.player"), button -> {
+            }));
+
+        playerWidget = addDrawableChild(new ButtonWidget(110, 35, 100, 20, Text.translatable("enclosure.widget.player"), button -> {
                 assert client != null;
                 button.active = false;
                 unlistedWidget.active = true;
                 permissionTargetListWidget.showPlayers();
-            })
-            .size(100, 20)
-            .position(110, 35)
-            .build());
-        unlistedWidget = addDrawableChild(ButtonWidget.builder(Text.translatable("enclosure.widget.unspecified_player"), button -> {
+            }));
+
+        unlistedWidget = addDrawableChild(new ButtonWidget(215, 35, 100, 20, Text.translatable("enclosure.widget.unspecified_player"), button -> {
                 assert client != null;
                 button.active = false;
                 playerWidget.active = true;
                 permissionTargetListWidget.showUnlistedPlayers();
-            })
-            .size(100, 20)
-            .position(215, 35)
-            .build());
-        aboutWidget = addDrawableChild(ButtonWidget.builder(Text.translatable("enclosure.widget.about"), button -> {
+            }));
+
+        aboutWidget = addDrawableChild(new ButtonWidget(320, 35, 50, 20, Text.translatable("enclosure.widget.about"), button -> {
                 assert client != null;
                 client.setScreen(new AboutScreen(this));
-            })
-            .size(50, 20)
-            .position(320, 35)
-            .build());
+            }));
+
         String owner = UUIDCacheS2CPacket.getName(area.getOwner());
         assert client != null;
         if (!handler.fatherFullName.isEmpty()) {
@@ -80,7 +73,7 @@ public class EnclosureScreen extends HandledScreen<EnclosureScreenHandler> {
                 button -> {
                     assert client.player != null;
                     close();
-                    client.player.networkHandler.sendChatCommand("enclosure gui " + handler.fatherFullName);
+                    client.player.sendCommand("enclosure gui " + handler.fatherFullName);
                 }, 5, 5, width - 10));
         }
         textWidgets.add(new ClickableTextWidget(client, this, Text.empty()
@@ -117,7 +110,7 @@ public class EnclosureScreen extends HandledScreen<EnclosureScreenHandler> {
             Text.translatable("enclosure.widget.selection_render.hover"),
             button -> {
                 assert client.player != null;
-                client.player.networkHandler.sendChatCommand("enclosure select land " + handler.fullName);
+                client.player.sendCommand("enclosure select land " + handler.fullName);
                 close();
             }, 5, 20, width - 10));
         for (String name : handler.subAreaNames) {
@@ -128,7 +121,7 @@ public class EnclosureScreen extends HandledScreen<EnclosureScreenHandler> {
                 button -> {
                     assert client.player != null;
                     close();
-                    client.player.networkHandler.sendChatCommand("enclosure gui %s.%s".formatted(handler.fullName, name));
+                    client.player.sendCommand("enclosure gui %s.%s".formatted(handler.fullName, name));
                 }, 5, 5, 0));
         }
     }
@@ -145,10 +138,10 @@ public class EnclosureScreen extends HandledScreen<EnclosureScreenHandler> {
             textWidget.y = renderBottom;
         }
         renderBottom += subLandWidgets.isEmpty() ? 0 : 10;
-        globalWidget.setY(renderBottom);
-        playerWidget.setY(renderBottom);
-        unlistedWidget.setY(renderBottom);
-        aboutWidget.setY(renderBottom);
+        globalWidget.y = renderBottom;
+        playerWidget.y = renderBottom;
+        unlistedWidget.y = renderBottom;
+        aboutWidget.y = renderBottom;
         permissionTargetListWidget.setTop(renderBottom + 25);
         super.render(matrices, mouseX, mouseY, delta);
         for (ClickableTextWidget textWidget : textWidgets) {
@@ -202,7 +195,7 @@ public class EnclosureScreen extends HandledScreen<EnclosureScreenHandler> {
         assert client != null;
         client.execute(() -> client.setScreen(new ConfirmScreen(this, readString, () -> {
             assert client.player != null;
-            client.player.networkHandler.sendCommand("enclosure confirm");
+            client.player.sendCommand("enclosure confirm");
         })));
     }
 }
