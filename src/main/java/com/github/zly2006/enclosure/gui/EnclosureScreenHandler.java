@@ -1,7 +1,6 @@
 package com.github.zly2006.enclosure.gui;
 
 import com.github.zly2006.enclosure.EnclosureArea;
-import dev.architectury.registry.registries.Registries;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
