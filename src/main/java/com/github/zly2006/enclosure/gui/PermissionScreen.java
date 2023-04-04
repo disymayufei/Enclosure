@@ -81,6 +81,7 @@ public class PermissionScreen extends Screen {
 
     public void requestConfirm(Text readString) {
         assert client != null;
+
         client.execute(() -> client.setScreen(new ConfirmScreen(this, readString, () -> {
             assert client.player != null;
             client.player.sendCommand("enclosure confirm");

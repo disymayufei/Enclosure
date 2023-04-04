@@ -37,6 +37,7 @@ public class ConfirmScreen extends Screen {
         addDrawableChild(yesButton);
         addDrawableChild(noButton);
     }
+
     @Override
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
         parent.render(matrices, 0, 0, delta);
