@@ -23,6 +23,11 @@ public class ConfirmScreen extends Screen {
         this.parent = parent;
         this.message = message;
         this.action = action;
+    }
+
+    @Override
+    protected void init() {
+        super.init();
         yesButton = new ButtonWidget((parent.width / 2 - 95), 0, 90, 20, Text.translatable("enclosure.widget.yes"), button -> {
             action.run();
             assert client != null;
@@ -34,9 +39,10 @@ public class ConfirmScreen extends Screen {
             client.setScreen(parent);
         });
 
-        addDrawableChild(yesButton);
-        addDrawableChild(noButton);
+        addSelectableChild(yesButton);
+        addSelectableChild(noButton);
     }
+
     @Override
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
         parent.render(matrices, 0, 0, delta);
@@ -56,5 +62,10 @@ public class ConfirmScreen extends Screen {
         noButton.y = (y + height - 30);
         yesButton.render(matrices, mouseX, mouseY, delta);
         noButton.render(matrices, mouseX, mouseY, delta);
+    }
+
+    @Override
+    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        return super.mouseClicked(mouseX, mouseY, button);
     }
 }
