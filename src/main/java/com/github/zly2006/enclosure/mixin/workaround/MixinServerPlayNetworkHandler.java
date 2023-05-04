@@ -1,4 +1,4 @@
-package com.github.zly2006.enclosure.mixin;
+package com.github.zly2006.enclosure.mixin.workaround;
 
 import com.github.zly2006.enclosure.access.MiningStatusAccess;
 import net.minecraft.block.entity.BlockEntity;
@@ -15,6 +15,9 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+/**
+ * This mixin is a work-around for the Minecraft mining system.
+ */
 @Mixin(ServerPlayNetworkHandler.class)
 public class MixinServerPlayNetworkHandler {
     @Shadow public ServerPlayerEntity player;

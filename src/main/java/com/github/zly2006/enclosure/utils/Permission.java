@@ -34,7 +34,9 @@ public class Permission implements Serializable2Text {
 
     public static final Permission CAKE = new Permission("cake", Target.Both, false, Items.CAKE);
 
-    public static final Permission CHORUS_TP = new Permission("chorustp", Target.Both, false, Items.CHORUS_FRUIT);
+    public static final Permission TELEPORT = new Permission("teleport", Target.Both, true, Items.ENDER_PEARL);
+
+    public static final Permission COMMAND_TP = new Permission("cmd_tp", Target.Enclosure, true, Items.CHAIN_COMMAND_BLOCK);
 
     public static final Permission CONTAINER = new Permission("container", Target.Both, false, Items.CHEST);
 
@@ -148,7 +150,8 @@ public class Permission implements Serializable2Text {
         register(BEACON);
         register(BED);
         register(CAKE);
-        register(CHORUS_TP);
+        register(TELEPORT);
+        register(COMMAND_TP);
         register(CONTAINER);
         register(DOOR);
         register(DYE);
@@ -225,7 +228,7 @@ public class Permission implements Serializable2Text {
         this(name, target, Set.of(name), defaultValue, icon);
     }
 
-    public static Permission get(String name) {
+    public static Permission getValue(String name) {
         return PERMISSIONS.get(name);
     }
 
@@ -265,7 +268,7 @@ public class Permission implements Serializable2Text {
         return this.ignoreOp;
     }
 
-    public Optional<Boolean> get(Map<String, Boolean> map) {
+    public Optional<Boolean> getValue(Map<String, Boolean> map) {
         for (String permission : permissions) {
             if (map.containsKey(permission)) {
                 if (!map.get(permission)) {
@@ -278,7 +281,7 @@ public class Permission implements Serializable2Text {
         return Optional.of(true);
     }
 
-    public void set(Map<String, Boolean> map, @Nullable Boolean value) {
+    public void setValue(Map<String, Boolean> map, @Nullable Boolean value) {
         for (String permission : permissions) {
             if (value != null) {
                 map.put(permission, value);
